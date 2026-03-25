@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "archive": "bash scripts/create-github-archive.sh"
   },
   "dependencies": {
     "firebase": "^12.11.0",

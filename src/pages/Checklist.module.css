@@ -1,0 +1,65 @@
+.pad {
+  padding: 24px 16px;
+}
+
+.back {
+  font-weight: 600;
+  color: var(--color-primary-dark) !important;
+  text-decoration: none !important;
+}
+
+.linkBtn {
+  display: inline-block;
+  margin: 0 16px 24px;
+  padding: 12px 18px;
+  border-radius: 12px;
+  background: var(--color-primary);
+  color: #fff !important;
+  font-weight: 700;
+  text-decoration: none !important;
+}
+
+.top {
+  padding: 0 12px;
+}
+
+.errorBanner {
+  margin: 0 16px 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(240, 75, 50, 0.12);
+  color: #a02818;
+  font-size: 0.9rem;
+}
+
+.main {
+  flex: 1;
+  padding: 0 16px 120px;
+}
+
+.sticky {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+  background: linear-gradient(180deg, transparent, var(--color-bg) 28%);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.saveBtn {
+  width: 100%;
+  min-height: 56px;
+  border-radius: 16px;
+  border: none;
+  background: var(--color-primary);
+  color: #fff;
+  font-weight: 800;
+  font-size: 1.05rem;
+  box-shadow: var(--shadow-soft);
+}
+
+.saveBtn:disabled {
+  opacity: 0.65;
+}

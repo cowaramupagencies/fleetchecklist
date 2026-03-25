@@ -1,0 +1,99 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(30, 30, 30, 0.45);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 16px;
+  padding-bottom: calc(16px + env(safe-area-inset-bottom));
+}
+
+@media (min-width: 520px) {
+  .backdrop {
+    align-items: center;
+  }
+}
+
+.panel {
+  width: 100%;
+  max-width: 440px;
+  background: var(--color-surface);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  padding: 20px 18px 18px;
+  box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.12);
+  max-height: 90dvh;
+  overflow: auto;
+}
+
+@media (min-width: 520px) {
+  .panel {
+    border-radius: var(--radius-lg);
+  }
+}
+
+.title {
+  margin: 0 0 12px;
+  font-size: 1.2rem;
+  color: var(--color-danger);
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.warningBody {
+  margin: 0 0 14px;
+  font-size: 0.9375rem;
+  line-height: 1.45;
+  color: var(--color-text);
+}
+
+.itemName {
+  margin: 0 0 14px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.label {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--color-text-muted);
+}
+
+.textarea {
+  width: 100%;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-grey);
+  padding: 12px;
+  resize: vertical;
+  margin-bottom: 18px;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.primary,
+.secondary {
+  min-height: 44px;
+  padding: 0 18px;
+  border-radius: 12px;
+  font-weight: 600;
+  border: none;
+}
+
+.primary {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.secondary {
+  background: var(--color-grey);
+  color: var(--color-text);
+}

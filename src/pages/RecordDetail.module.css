@@ -1,0 +1,106 @@
+.pad {
+  padding: 24px 16px;
+}
+
+.back {
+  font-weight: 600;
+  color: var(--color-primary-dark) !important;
+  text-decoration: none !important;
+}
+
+.main {
+  flex: 1;
+  padding: 16px;
+  padding-bottom: calc(32px + env(safe-area-inset-bottom));
+}
+
+.meta {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  box-shadow: var(--shadow-soft);
+  margin-bottom: 20px;
+}
+
+.vname {
+  margin: 0 0 8px;
+  font-size: 1.25rem;
+}
+
+.line {
+  margin: 0 0 4px;
+  color: var(--color-text-muted);
+}
+
+.date {
+  margin: 0 0 8px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.status {
+  margin: 0;
+  font-size: 0.9375rem;
+}
+
+.item {
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  box-shadow: var(--shadow-soft);
+  margin-bottom: 8px;
+}
+
+.itemTop {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.dotOk,
+.dotBad,
+.dotGrey {
+  width: 12px;
+  height: 12px;
+  border-radius: 4px;
+  margin-top: 4px;
+  flex-shrink: 0;
+}
+
+.dotOk {
+  background: var(--color-success);
+}
+
+.dotBad {
+  background: var(--color-danger);
+}
+
+.dotGrey {
+  background: var(--color-grey-mid);
+}
+
+.itemLabel {
+  flex: 1;
+  font-weight: 600;
+}
+
+.stateBadge {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
+}
+
+.note {
+  margin: 8px 0 0 22px;
+  font-size: 0.9rem;
+  color: var(--color-text);
+}
+
+.photo {
+  margin: 10px 0 0 22px;
+  max-width: 100%;
+  max-height: 220px;
+  border-radius: var(--radius-md);
+  object-fit: cover;
+}

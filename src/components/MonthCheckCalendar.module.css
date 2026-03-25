@@ -1,0 +1,101 @@
+.wrap {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: 14px 12px 16px;
+  box-shadow: var(--shadow-soft);
+  margin-bottom: 24px;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.arrow {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid var(--color-grey);
+  background: #fff;
+  font-size: 1.25rem;
+  line-height: 1;
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+.monthTitle {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: center;
+  flex: 1;
+}
+
+.hint {
+  margin: 0 0 12px;
+  font-size: 0.75rem;
+  line-height: 1.35;
+  color: var(--color-text-muted);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+
+.dow {
+  text-align: center;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
+  padding: 4px 0;
+}
+
+.cellPad {
+  min-height: 40px;
+}
+
+.day {
+  aspect-ratio: 1;
+  min-height: 40px;
+  max-height: 48px;
+  border: none;
+  border-radius: 12px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.dayEmpty {
+  background: var(--color-grey);
+  color: var(--color-text-muted);
+}
+
+.dayGood {
+  background: var(--color-success);
+  color: #1a1a1a;
+}
+
+.dayIssue {
+  background: var(--color-danger);
+  color: #fff;
+}
+
+.dayToday {
+  outline: 2px solid rgba(22, 151, 166, 0.55);
+  outline-offset: 1px;
+}
+
+.day:active {
+  transform: scale(0.96);
+}

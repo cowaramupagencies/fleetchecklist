@@ -1,0 +1,66 @@
+.row {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  max-width: 720px;
+  margin: 0 auto 16px;
+  padding: 0 4px;
+}
+
+.dayBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  border: none;
+  background: transparent;
+  padding: 8px 2px;
+  border-radius: 14px;
+  cursor: pointer;
+  min-height: 88px;
+}
+
+.circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+}
+
+.empty .circle {
+  background: var(--color-grey);
+}
+
+.good .circle {
+  background: var(--color-success);
+}
+
+.issue .circle {
+  background: var(--color-danger);
+}
+
+.selected .circle {
+  border-color: var(--color-primary);
+  transform: scale(1.06);
+}
+
+.today {
+  outline: 2px solid rgba(22, 151, 166, 0.35);
+  outline-offset: 2px;
+  border-radius: 16px;
+}
+
+.dow {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.num {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-text);
+}

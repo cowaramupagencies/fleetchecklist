@@ -1,0 +1,50 @@
+.row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 52px;
+  padding: 12px 14px;
+  border: none;
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-soft);
+  text-align: left;
+  cursor: pointer;
+}
+
+.stateIcon {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  flex-shrink: 0;
+  border: 2px solid var(--color-grey-mid);
+}
+
+.unchecked {
+  background: var(--color-grey);
+  border-color: var(--color-grey-mid);
+}
+
+.good {
+  background: var(--color-success);
+  border-color: rgba(139, 207, 47, 0.5);
+}
+
+.issue {
+  background: var(--color-danger);
+  border-color: rgba(240, 75, 50, 0.5);
+}
+
+.label {
+  flex: 1;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--color-text);
+  line-height: 1.35;
+}
+
+.clip {
+  font-size: 0.85rem;
+  opacity: 0.85;
+}

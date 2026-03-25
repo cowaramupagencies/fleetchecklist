@@ -1,0 +1,142 @@
+.pad {
+  padding: 24px 16px;
+}
+
+.back {
+  font-weight: 600;
+  color: var(--color-primary-dark) !important;
+  text-decoration: none !important;
+}
+
+.main {
+  flex: 1;
+  padding: 16px;
+  padding-bottom: calc(32px + env(safe-area-inset-bottom));
+}
+
+.hero {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  box-shadow: var(--shadow-soft);
+  margin-bottom: 16px;
+}
+
+.imageWrap {
+  width: 100%;
+  max-height: 200px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--color-grey);
+  margin-bottom: 12px;
+}
+
+.img {
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+  display: block;
+}
+
+.ph {
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4rem;
+  background: linear-gradient(135deg, var(--color-primary-soft), var(--color-grey));
+}
+
+.editLink {
+  font-weight: 700;
+  color: var(--color-primary-dark) !important;
+  text-decoration: none !important;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--color-primary-soft);
+  color: var(--color-primary-dark);
+  margin-bottom: 8px;
+}
+
+.reg {
+  margin: 0 0 8px;
+  font-weight: 600;
+}
+
+.notes {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 0.9375rem;
+}
+
+.primary {
+  width: 100%;
+  min-height: 56px;
+  border-radius: 16px;
+  border: none;
+  background: var(--color-primary);
+  color: #fff;
+  font-weight: 800;
+  font-size: 1.05rem;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-soft);
+}
+
+.h2 {
+  margin: 0 0 12px;
+  font-size: 1rem;
+}
+
+.muted {
+  color: var(--color-text-muted);
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-soft);
+  text-decoration: none !important;
+  color: inherit !important;
+  font-weight: 600;
+}
+
+.date {
+  font-variant-numeric: tabular-nums;
+}
+
+.tagOk {
+  font-size: 0.8125rem;
+  color: var(--color-success);
+}
+
+.tagBad {
+  font-size: 0.8125rem;
+  color: var(--color-danger);
+}
+
+.tagMid {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+}

@@ -1,0 +1,86 @@
+.main {
+  flex: 1;
+  padding: 16px 16px 32px;
+  padding-bottom: calc(32px + env(safe-area-inset-bottom));
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.addBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 18px;
+  border-radius: 14px;
+  background: var(--color-primary);
+  color: #fff !important;
+  font-weight: 700;
+  text-decoration: none !important;
+  box-shadow: var(--shadow-soft);
+}
+
+.link {
+  font-weight: 600;
+  color: var(--color-primary-dark) !important;
+  text-decoration: none !important;
+}
+
+.iconLink {
+  font-size: 1.35rem;
+  text-decoration: none !important;
+  min-width: 44px;
+  text-align: right;
+}
+
+.error {
+  color: var(--color-danger);
+  font-size: 0.9rem;
+}
+
+.muted {
+  color: var(--color-text-muted);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cardRow {
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
+}
+
+.cardLink {
+  flex: 1;
+  min-width: 0;
+  text-decoration: none;
+  color: inherit;
+}
+
+.editLink {
+  flex-shrink: 0;
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 14px;
+  border-radius: 14px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-grey);
+  font-weight: 700;
+  font-size: 0.875rem;
+  color: var(--color-primary-dark) !important;
+  text-decoration: none !important;
+  box-shadow: var(--shadow-soft);
+}

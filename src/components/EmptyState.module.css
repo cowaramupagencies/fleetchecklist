@@ -1,0 +1,28 @@
+.wrap {
+  text-align: center;
+  padding: 48px 20px;
+  max-width: 360px;
+  margin: 0 auto;
+}
+
+.icon {
+  font-size: 2.5rem;
+  margin-bottom: 12px;
+}
+
+.title {
+  margin: 0 0 8px;
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.desc {
+  margin: 0 0 20px;
+  color: var(--color-text-muted);
+  font-size: 0.9375rem;
+}
+
+.action {
+  display: flex;
+  justify-content: center;
+}

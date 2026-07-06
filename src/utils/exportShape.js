@@ -2,6 +2,13 @@
  * Flatten checks for CSV / PDF export.
  */
 
+/** Checks with at least one item marked good or issue (saved inspections). */
+export function checksWithFilledResults(checks) {
+  return checks.filter((c) =>
+    (c.results || []).some((r) => r.state === 'good' || r.state === 'issue')
+  );
+}
+
 export function flattenChecksForExport(vehiclesById, checks) {
   const rows = [];
   for (const check of checks) {

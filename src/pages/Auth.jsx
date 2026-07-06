@@ -57,6 +57,11 @@ export function AuthPage() {
   return (
     <div className={styles.page}>
       <div className={styles.card}>
+        <img
+          src={`${import.meta.env.BASE_URL}cowag-logo.png`}
+          alt="Cowaramup Agencies"
+          className={styles.brandLogo}
+        />
         <h1 className={styles.logo}>Fleet Checklist</h1>
         <p className={styles.tagline}>Daily truck & forklift inspections</p>
 

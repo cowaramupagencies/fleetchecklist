@@ -1,0 +1,22 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "checks",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "createdBy", "order": "ASCENDING" },
+        { "fieldPath": "vehicleId", "order": "ASCENDING" },
+        { "fieldPath": "dateKey", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "checks",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "createdBy", "order": "ASCENDING" },
+        { "fieldPath": "dateKey", "order": "ASCENDING" }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}

@@ -1,6 +1,8 @@
 node_modules
 dist
+docs
 .env.local
 .env*.local
 GitHub upload
-GitHub upload - website only
+.DS_Store
+*.log

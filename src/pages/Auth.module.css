@@ -28,6 +28,16 @@
   box-shadow: var(--shadow-soft);
 }
 
+.brandLogo {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 56px;
+  margin: 0 auto 16px;
+  object-fit: contain;
+}
+
 .logo {
   margin: 0 0 6px;
   font-size: 1.5rem;

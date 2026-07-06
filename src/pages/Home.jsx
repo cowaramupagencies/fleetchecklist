@@ -57,7 +57,7 @@ export function HomePage() {
             + Add vehicle
           </Link>
           <Link to="/history" className={styles.link}>
-            History
+            Export / print
           </Link>
         </div>
 

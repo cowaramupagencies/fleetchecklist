@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { Link, useParams, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth.js';
 import { getVehicle } from '../services/vehicles.js';
 import { resolveChecklistTemplateForVehicle } from '../utils/vehicleTemplate.js';
@@ -31,6 +31,7 @@ import styles from './Checklist.module.css';
 
 export function ChecklistPage() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const { user } = useAuth();
 
@@ -208,10 +209,9 @@ export function ChecklistPage() {
     setSaving(true);
     setError('');
     try {
-      const id = await saveCheck(user.uid, vehicle, selectedDateKey, results, checkId);
-      setCheckId(id);
-      const list = await getChecksForVehicleWeek(user.uid, vehicle.id, weekStartKey, weekEndKey);
-      setWeekChecks(list);
+      const savedId = await saveCheck(user.uid, vehicle, selectedDateKey, results, checkId);
+      setCheckId(savedId);
+      navigate('/');
     } catch (e) {
       setError(e.message || 'Save failed');
     } finally {

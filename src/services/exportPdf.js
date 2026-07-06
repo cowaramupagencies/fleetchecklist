@@ -54,3 +54,14 @@ export function buildInspectionPdf({ title, filters, vehiclesById, checks }) {
 export function downloadPdf(doc, filename) {
   doc.save(filename);
 }
+
+/** Opens the system print dialog for an inspection export PDF. */
+export function printInspectionPdf({ title, filters, vehiclesById, checks }) {
+  const doc = buildInspectionPdf({ title, filters, vehiclesById, checks });
+  doc.autoPrint();
+  const blobUrl = doc.output('bloburl');
+  const win = window.open(blobUrl, '_blank');
+  if (!win) {
+    doc.save(`fleet-checklist-${filters.from}-${filters.to}.pdf`);
+  }
+}

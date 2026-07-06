@@ -10,10 +10,13 @@ export function ExportControls({
   onToChange,
   onExportCsv,
   onExportPdf,
+  onPrint,
+  recordCount,
   busy,
 }) {
   return (
     <div className={styles.card}>
+      <h2 className={styles.cardTitle}>Date range</h2>
       <div className={styles.row}>
         <label className={styles.label} htmlFor="exp-veh">
           Vehicle
@@ -58,12 +61,22 @@ export function ExportControls({
           />
         </div>
       </div>
+      {typeof recordCount === 'number' ? (
+        <p className={styles.hint}>
+          {recordCount
+            ? `${recordCount} saved checklist${recordCount === 1 ? '' : 's'} ready to export`
+            : 'No saved checklists in this range yet'}
+        </p>
+      ) : null}
       <div className={styles.btns}>
-        <button type="button" className={styles.btn} disabled={busy} onClick={onExportCsv}>
-          Export CSV
+        <button type="button" className={styles.btnPrint} disabled={busy || recordCount === 0} onClick={onPrint}>
+          Print
         </button>
-        <button type="button" className={styles.btnPrimary} disabled={busy} onClick={onExportPdf}>
-          Export PDF
+        <button type="button" className={styles.btn} disabled={busy || recordCount === 0} onClick={onExportCsv}>
+          Download CSV
+        </button>
+        <button type="button" className={styles.btnPrimary} disabled={busy || recordCount === 0} onClick={onExportPdf}>
+          Download PDF
         </button>
       </div>
     </div>

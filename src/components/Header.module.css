@@ -20,9 +20,10 @@
 
 .logo {
   display: block;
-  max-width: min(100%, 320px);
+  width: auto;
+  max-width: min(100%, 360px);
   height: auto;
-  max-height: 44px;
+  max-height: 52px;
   object-fit: contain;
 }
 

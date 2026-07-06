@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth.js';
 import { subscribeVehicles } from '../services/vehicles.js';
 import { getChecksInRange } from '../services/checks.js';
-import { buildInspectionPdf, downloadPdf } from '../services/exportPdf.js';
-import { flattenChecksForExport, downloadTextFile, rowsToCsv } from '../utils/exportShape.js';
+import { buildInspectionPdf, downloadPdf, printInspectionPdf } from '../services/exportPdf.js';
+import { checksWithFilledResults, flattenChecksForExport, downloadTextFile, rowsToCsv } from '../utils/exportShape.js';
 import { sortChecksByDateDesc } from '../utils/weekStatus.js';
 import { toDateKey } from '../utils/dates.js';
 import { AppShell } from '../components/AppShell.jsx';
@@ -70,8 +70,21 @@ export function HistoryPage() {
     return m;
   }, [vehicles]);
 
+  const exportableChecks = useMemo(() => checksWithFilledResults(checks), [checks]);
+
+  function exportMeta() {
+    const vehicleLabel =
+      vehicleId && vehiclesById[vehicleId] ? vehiclesById[vehicleId].name : 'All vehicles';
+    return {
+      title: 'Fleet Checklist — Inspection export',
+      filters: { vehicleLabel, from, to },
+      vehiclesById,
+      checks: exportableChecks,
+    };
+  }
+
   function handleExportCsv() {
-    const rows = flattenChecksForExport(vehiclesById, checks);
+    const rows = flattenChecksForExport(vehiclesById, exportableChecks);
     const csv = rowsToCsv(rows);
     downloadTextFile(`fleet-checklist-${from}-${to}.csv`, csv);
   }
@@ -79,17 +92,17 @@ export function HistoryPage() {
   function handleExportPdf() {
     setExportBusy(true);
     try {
-      const vehicleLabel =
-        vehicleId && vehiclesById[vehicleId]
-          ? vehiclesById[vehicleId].name
-          : 'All vehicles';
-      const doc = buildInspectionPdf({
-        title: 'Fleet Checklist — Inspection export',
-        filters: { vehicleLabel, from, to },
-        vehiclesById,
-        checks,
-      });
+      const doc = buildInspectionPdf(exportMeta());
       downloadPdf(doc, `fleet-checklist-${from}-${to}.pdf`);
+    } finally {
+      setExportBusy(false);
+    }
+  }
+
+  function handlePrint() {
+    setExportBusy(true);
+    try {
+      printInspectionPdf(exportMeta());
     } finally {
       setExportBusy(false);
     }
@@ -98,7 +111,7 @@ export function HistoryPage() {
   return (
     <AppShell>
       <Header
-        title="History"
+        title="Export & print"
         left={
           <Link to="/" className={styles.back}>
             ← Home
@@ -106,6 +119,9 @@ export function HistoryPage() {
         }
       />
       <main className={styles.main}>
+        <p className={styles.lead}>
+          Choose a date range and vehicle, then print or download saved checklists.
+        </p>
         <ExportControls
           vehicles={vehicles}
           vehicleId={vehicleId}
@@ -116,6 +132,8 @@ export function HistoryPage() {
           onToChange={setTo}
           onExportCsv={handleExportCsv}
           onExportPdf={handleExportPdf}
+          onPrint={handlePrint}
+          recordCount={exportableChecks.length}
           busy={exportBusy}
         />
 
@@ -127,6 +145,17 @@ export function HistoryPage() {
           <EmptyState title="No records" description="Try widening your date range or add a vehicle." />
         ) : null}
 
+        {!loading && checks.length && !exportableChecks.length ? (
+          <p className={styles.muted}>No completed checklist items in this range yet.</p>
+        ) : null}
+
+        {exportableChecks.length ? (
+          <p className={styles.count}>
+            {exportableChecks.length} saved checklist{exportableChecks.length === 1 ? '' : 's'} in range
+          </p>
+        ) : null}
+
+        <h2 className={styles.h2}>Saved checklists</h2>
         <ul className={styles.list}>
           {checks.map((c) => {
             const v = vehiclesById[c.vehicleId];

@@ -1,22 +1,13 @@
 import styles from './Header.module.css';
 
+const LOGO_SRC = `${import.meta.env.BASE_URL}cowag-logo.png`;
+
 export function Header({ title, left, right, subtitle, showBrand = true }) {
   return (
     <header className={styles.header}>
       {showBrand ? (
         <div className={styles.brandRow}>
-          <img
-            src="/cowag-logo.png"
-            alt="Cowaramup Agencies"
-            className={styles.logo}
-            onError={(e) => {
-              const el = e.currentTarget;
-              el.onerror = null;
-              if (!el.src.endsWith('cowag-logo.svg')) {
-                el.src = '/cowag-logo.svg';
-              }
-            }}
-          />
+          <img src={LOGO_SRC} alt="Cowaramup Agencies" className={styles.logo} />
         </div>
       ) : null}
       <div className={styles.row}>

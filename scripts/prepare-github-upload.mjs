@@ -119,8 +119,44 @@ Generated: ${new Date().toLocaleString()}
 
 writeFileSync(join(outDir, 'UPLOAD INSTRUCTIONS.txt'), instructions);
 
+// Flat "website only" folder — upload to repo ROOT (works with Pages: main / root)
+const websiteOnlyDir = join(root, 'GitHub upload - website only');
+if (existsSync(websiteOnlyDir)) {
+  rmSync(websiteOnlyDir, { recursive: true, force: true });
+}
+mkdirSync(websiteOnlyDir, { recursive: true });
+cpSync(join(root, 'docs'), websiteOnlyDir, { recursive: true });
+
+writeFileSync(
+  join(websiteOnlyDir, 'READ ME FIRST.txt'),
+  `UPLOAD THESE FILES TO THE ROOT OF YOUR GITHUB REPO
+====================================================
+
+This folder has the BUILT website (not source code).
+Upload everything here to:
+  https://github.com/cowaramupagencies/fleetchecklist
+
+STEPS:
+1. On GitHub, open your repo
+2. DELETE the old "index.html" at the root (the one that breaks with main.jsx)
+3. Click "Add file" → "Upload files"
+4. Drag ALL files from THIS folder into GitHub (index.html, assets folder, etc.)
+5. Commit
+
+GITHUB PAGES SETTING:
+  Settings → Pages → Deploy from branch → main → / (root)
+
+That is probably what you already have — this upload is made for that.
+
+SITE URL: https://cowaramupagencies.github.io/fleetchecklist/
+
+After upload, hard refresh: Ctrl+Shift+R
+`
+);
+
 console.log('');
 console.log('========================================');
-console.log(`Done! GitHub upload folder is ready.`);
-console.log(`Files to upload: ${fileCount}`);
+console.log(`Done! Two folders ready:`);
+console.log(`  1. "GitHub upload" — full project (${fileCount} files)`);
+console.log(`  2. "GitHub upload - website only" — JUST the live site (use this!)`);
 console.log('========================================');

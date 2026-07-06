@@ -27,4 +27,4 @@ Firebase Console → Authentication → Authorized domains → add:
   cowaramupagencies.github.io
 
 Files in this folder: 104
-Generated: 06/07/2026, 11:28:21 am
+Generated: 06/07/2026, 11:36:51 am

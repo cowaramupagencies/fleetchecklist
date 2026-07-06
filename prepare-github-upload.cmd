@@ -8,6 +8,6 @@ if errorlevel 1 (
   exit /b 1
 )
 echo.
-echo Open the "GitHub upload" folder and upload ALL of it to GitHub.
+echo Done! Upload everything inside the "GitHub upload" folder to GitHub.
 explorer "%~dp0GitHub upload"
 pause

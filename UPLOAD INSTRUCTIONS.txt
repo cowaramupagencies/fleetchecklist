@@ -1,30 +1,20 @@
-FLEET CHECKLIST — UPLOAD THIS ENTIRE FOLDER TO GITHUB
-============================================================
+UPLOAD THIS FOLDER TO GITHUB
+==============================
 
-Upload everything inside this "GitHub upload" folder to:
-  https://github.com/cowaramupagencies/fleetchecklist
+Repo: https://github.com/cowaramupagencies/fleetchecklist
 
-Do NOT upload node_modules (not included).
+1. Open your repo on GitHub (main branch)
+2. Add file → Upload files
+3. Drag EVERYTHING from this folder into GitHub
+4. Commit
 
-GITHUB PAGES SETUP (one time)
------------------------------
-1. GitHub repo → Settings → Pages
-2. Source: Deploy from branch
-3. Branch: main
-4. Folder: /docs
-5. Save
+Files in this folder: 89
+(About 90 files — NOT 20,000. node_modules is not included.)
 
-Your site: https://cowaramupagencies.github.io/fleetchecklist/
+GitHub will build the live website automatically when you upload.
+Live site: https://cowaramupagencies.github.io/fleetchecklist/
 
-AFTER YOU CHANGE THE APP LOCALLY
---------------------------------
-Double-click "prepare-github-upload.cmd" in the main FleetCheck folder.
-Then upload this folder again to GitHub.
+To refresh this folder after changes, double-click prepare-github-upload.cmd
+in the main FleetCheck folder.
 
-FIREBASE (live site login)
---------------------------
-Firebase Console → Authentication → Authorized domains → add:
-  cowaramupagencies.github.io
-
-Files in this folder: 104
-Generated: 06/07/2026, 11:36:51 am
+Generated: 06/07/2026, 2:55:05 pm

@@ -1,10 +1,10 @@
 import { cpSync, existsSync, mkdirSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
-import { execSync } from 'node:child_process';
 
 const root = resolve(import.meta.dirname, '..');
 const outDir = join(root, 'GitHub upload');
 
+// Only what GitHub needs — no node_modules, dist, or docs
 const COPY_PATHS = [
   'src',
   'public',
@@ -39,9 +39,6 @@ function countFiles(dir) {
   return n;
 }
 
-console.log('Building website...');
-execSync('npm.cmd run build', { cwd: root, stdio: 'inherit', shell: true });
-
 if (existsSync(outDir)) {
   rmSync(outDir, { recursive: true, force: true });
 }
@@ -53,44 +50,37 @@ for (const rel of COPY_PATHS) {
     console.warn(`Skip (not found): ${rel}`);
     continue;
   }
-  const dest = join(outDir, rel);
-  copyPath(src, dest);
+  copyPath(src, join(outDir, rel));
   console.log(`Copied: ${rel}`);
 }
 
 const fileCount = countFiles(outDir);
+
 writeFileSync(
   join(outDir, 'UPLOAD INSTRUCTIONS.txt'),
-  `FLEET CHECKLIST — UPLOAD THIS FOLDER TO GITHUB
-================================================
+  `UPLOAD THIS FOLDER TO GITHUB
+==============================
 
-Upload everything inside this "GitHub upload" folder to:
-  https://github.com/cowaramupagencies/fleetchecklist
+Repo: https://github.com/cowaramupagencies/fleetchecklist
 
-Do NOT upload node_modules, dist, or docs (not included).
-
-LIVE WEBSITE (automatic)
-------------------------
-Pushing to the main branch triggers GitHub Actions, which builds and
-publishes the site to the gh-pages branch.
-
-GitHub → Settings → Pages:
-  Branch: gh-pages
-  Folder: / (root)
-
-Site URL: https://cowaramupagencies.github.io/fleetchecklist/
-
-FIREBASE (live site login)
---------------------------
-Firebase Console → Authentication → Authorized domains → add:
-  cowaramupagencies.github.io
+1. Open your repo on GitHub (main branch)
+2. Add file → Upload files
+3. Drag EVERYTHING from this folder into GitHub
+4. Commit
 
 Files in this folder: ${fileCount}
+(About 90 files — NOT 20,000. node_modules is not included.)
+
+GitHub will build the live website automatically when you upload.
+Live site: https://cowaramupagencies.github.io/fleetchecklist/
+
+To refresh this folder after changes, double-click prepare-github-upload.cmd
+in the main FleetCheck folder.
+
 Generated: ${new Date().toLocaleString()}
 `
 );
 
 console.log('');
-console.log('========================================');
 console.log(`Done! "GitHub upload" folder ready (${fileCount} files).`);
-console.log('========================================');
+console.log('Upload everything inside it to GitHub — do NOT upload node_modules.');

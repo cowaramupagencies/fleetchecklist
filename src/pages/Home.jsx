@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth.js';
-import { subscribeVehicles } from '../services/vehicles.js';
+import { removeExtraForklifts, seedDefaultForklifts, subscribeVehicles } from '../services/vehicles.js';
 import { AppShell } from '../components/AppShell.jsx';
 import { Header } from '../components/Header.jsx';
 import { VehicleCard } from '../components/VehicleCard.jsx';
@@ -13,6 +13,17 @@ export function HomePage() {
   const [vehicles, setVehicles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const seededForkliftsRef = useRef(false);
+
+  useEffect(() => {
+    if (!user || seededForkliftsRef.current) return;
+    seededForkliftsRef.current = true;
+    seedDefaultForklifts(user.uid)
+      .then(() => removeExtraForklifts(user.uid))
+      .catch((err) => {
+        console.error('Could not sync Cowaramup forklifts:', err);
+      });
+  }, [user]);
 
   useEffect(() => {
     if (!user) return undefined;

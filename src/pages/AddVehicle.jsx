@@ -30,7 +30,7 @@ export function AddVehiclePage() {
     if (!user) return;
     setBusy(true);
     try {
-      const checklistTemplate = buildEmbeddedChecklistTemplateForType(type);
+      const checklistTemplate = await buildEmbeddedChecklistTemplateForType(user.uid, type);
       const emojiTrim = emoji.trim();
       const id = await createVehicle(user.uid, {
         name: name.trim(),

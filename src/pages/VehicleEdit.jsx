@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { deleteField } from 'firebase/firestore';
 import { useAuth } from '../hooks/useAuth.js';
-import { getVehicle, updateVehicle } from '../services/vehicles.js';
+import { deactivateVehicle, getVehicle, updateVehicle } from '../services/vehicles.js';
 import { buildEmbeddedChecklistTemplateForType } from '../utils/vehicleTemplate.js';
 import { AppShell } from '../components/AppShell.jsx';
 import { Header } from '../components/Header.jsx';
@@ -60,6 +60,22 @@ export function VehicleEditPage() {
     };
   }, [user, id]);
 
+  async function handleDelete() {
+    if (!user || !id) return;
+    const label = name.trim() || registrationId.trim() || 'this vehicle';
+    if (!window.confirm(`Remove ${label} from your fleet?`)) return;
+    setBusy(true);
+    setError('');
+    try {
+      await deactivateVehicle(id);
+      navigate('/');
+    } catch (err) {
+      setError(err.message || 'Could not remove vehicle');
+    } finally {
+      setBusy(false);
+    }
+  }
+
   async function onSubmit(e) {
     e.preventDefault();
     setError('');
@@ -80,7 +96,7 @@ export function VehicleEditPage() {
         emoji: emoji.trim() ? emoji.trim() : deleteField(),
       };
       if (nextType !== initialType) {
-        patch.checklistTemplate = buildEmbeddedChecklistTemplateForType(nextType);
+        patch.checklistTemplate = await buildEmbeddedChecklistTemplateForType(user.uid, nextType);
       }
       await updateVehicle(id, patch);
       navigate(`/vehicles/${id}`);
@@ -195,6 +211,10 @@ export function VehicleEditPage() {
             Save changes
           </button>
         </form>
+
+        <button type="button" className={styles.deleteBtn} disabled={busy} onClick={handleDelete}>
+          Remove vehicle from fleet
+        </button>
       </main>
     </AppShell>
   );

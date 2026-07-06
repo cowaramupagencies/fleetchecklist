@@ -20,8 +20,10 @@ import {
   addDays,
   getWeekDayKeys,
   getWeekRangeLabel,
+  isTodayDateKey,
   startOfWeekMonday,
   toDateKey,
+  weekOffsetForDateKey,
 } from '../utils/dates.js';
 import { aggregateWeekDayStatus } from '../utils/weekStatus.js';
 import { buildResultsFromTemplate } from '../utils/templateResults.js';
@@ -48,6 +50,7 @@ export function ChecklistPage() {
   useEffect(() => {
     if (dateFromUrl && /^\d{4}-\d{2}-\d{2}$/.test(dateFromUrl)) {
       setSelectedDateKey(dateFromUrl);
+      setWeekOffset(weekOffsetForDateKey(dateFromUrl));
     }
   }, [dateFromUrl]);
 
@@ -88,7 +91,7 @@ export function ChecklistPage() {
           return;
         }
         setVehicle(v);
-        const tpl = resolveChecklistTemplateForVehicle(v);
+        const tpl = await resolveChecklistTemplateForVehicle(user.uid, v);
         if (!tpl?.categories?.length) {
           setError('No checklist template available for this vehicle.');
           setTemplate(null);
@@ -141,6 +144,15 @@ export function ChecklistPage() {
     () => aggregateWeekDayStatus(weekChecks, weekDayKeys),
     [weekChecks, weekDayKeys]
   );
+
+  useEffect(() => {
+    if (weekDayKeys.includes(selectedDateKey)) return;
+    const fallback =
+      weekDayKeys.find((key) => isTodayDateKey(key)) ?? weekDayKeys[0];
+    if (!fallback) return;
+    setSelectedDateKey(fallback);
+    setSearchParams({ date: fallback });
+  }, [weekDayKeys, selectedDateKey, setSearchParams]);
 
   function onSelectDay(key) {
     setSelectedDateKey(key);

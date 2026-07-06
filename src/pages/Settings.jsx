@@ -1,13 +1,13 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth.js';
-import { buildForkliftTemplate, buildTruckTemplate } from '../data/defaultTemplates.js';
+import { seedDefaultForklifts } from '../services/vehicles.js';
 import {
+  applyLatestDefaultTemplates,
   getTemplatesForUser,
-  normalizeTemplateCategories,
+  refreshTemplateFromBuiltIn,
   saveTemplate,
   seedDefaultTemplates,
-  updateTemplateDoc,
 } from '../services/templates.js';
 import { AppShell } from '../components/AppShell.jsx';
 import { Header } from '../components/Header.jsx';
@@ -33,6 +33,7 @@ export function SettingsPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [seeding, setSeeding] = useState(false);
+  const [seedingVehicles, setSeedingVehicles] = useState(false);
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
 
@@ -64,6 +65,43 @@ export function SettingsPage() {
       setDraft(null);
     }
   }, [current, activeType]);
+
+  async function handleSeedForklifts() {
+    if (!user) return;
+    setSeedingVehicles(true);
+    setMessage('');
+    setError('');
+    try {
+      const { created, updated } = await seedDefaultForklifts(user.uid);
+      if (created.length) {
+        setMessage(`Added forklifts: ${created.map((v) => v.registrationId).join(', ')}.`);
+      } else if (updated.length) {
+        setMessage('Forklifts already on file — cartoon images updated where missing.');
+      } else {
+        setMessage('Forklifts AU33516 and AU4537 are already on your fleet.');
+      }
+    } catch (e) {
+      setError(e.message || 'Could not add forklifts');
+    } finally {
+      setSeedingVehicles(false);
+    }
+  }
+
+  async function handleApplyLatestDefaults() {
+    if (!user) return;
+    setSeeding(true);
+    setMessage('');
+    setError('');
+    try {
+      await applyLatestDefaultTemplates(user.uid);
+      await load();
+      setMessage('Cowaramup checklist applied to truck and forklift templates.');
+    } catch (e) {
+      setError(e.message || 'Update failed');
+    } finally {
+      setSeeding(false);
+    }
+  }
 
   async function handleSeed() {
     if (!user) return;
@@ -205,15 +243,9 @@ export function SettingsPage() {
     setSaving(true);
     setError('');
     try {
-      const built = activeType === 'truck' ? buildTruckTemplate() : buildForkliftTemplate();
-      built.categories = normalizeTemplateCategories(built.categories);
-      await updateTemplateDoc(current.id, {
-        name: built.name,
-        vehicleType: built.vehicleType,
-        categories: built.categories,
-      });
+      await refreshTemplateFromBuiltIn(user.uid, activeType);
       await load();
-      setMessage('Template reset to defaults.');
+      setMessage('Template reset to Cowaramup defaults.');
     } catch (e) {
       setError(e.message || 'Reset failed');
     } finally {
@@ -352,11 +384,39 @@ export function SettingsPage() {
         </section>
 
         <section className={styles.section}>
+          <h2 className={styles.h2}>Fleet vehicles</h2>
+          <p className={styles.muted}>
+            Adds Cowaramup forklifts <strong>AU33516</strong> and <strong>AU4537</strong> with cartoon
+            icons if they are not already on your account.
+          </p>
+          <button
+            type="button"
+            className={styles.primary}
+            disabled={seedingVehicles}
+            onClick={handleSeedForklifts}
+          >
+            {seedingVehicles ? 'Working…' : 'Add Cowaramup forklifts (AU33516 & AU4537)'}
+          </button>
+        </section>
+
+        <section className={styles.section}>
           <h2 className={styles.h2}>Admin</h2>
           <p className={styles.muted}>
-            CSV/PDF exports use filters on the History screen. Default date range there is the last 30 days.
+            Use this if your forklift checklist still shows the old short list. Replaces truck and
+            forklift questions with the latest Cowaramup daily checklist.
           </p>
-          <button type="button" className={styles.primary} disabled={seeding} onClick={handleSeed}>
+          <button
+            type="button"
+            className={styles.primary}
+            disabled={seeding}
+            onClick={handleApplyLatestDefaults}
+          >
+            {seeding ? 'Working…' : 'Apply Cowaramup checklist (forklift & truck)'}
+          </button>
+          <p className={styles.muted} style={{ marginTop: 12 }}>
+            First-time setup only — creates templates if none exist yet.
+          </p>
+          <button type="button" className={styles.btn} disabled={seeding} onClick={handleSeed}>
             {seeding ? 'Working…' : 'Seed default checklist templates'}
           </button>
         </section>

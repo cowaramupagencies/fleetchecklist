@@ -110,10 +110,14 @@ export function AuthPage() {
               </button>
             </form>
 
-            <div className={styles.divider}>or</div>
-            <button type="button" className={styles.secondary} disabled={busy} onClick={onAnon}>
-              Continue without account (dev)
-            </button>
+            {!import.meta.env.PROD ? (
+              <>
+                <div className={styles.divider}>or</div>
+                <button type="button" className={styles.secondary} disabled={busy} onClick={onAnon}>
+                  Continue without account (dev)
+                </button>
+              </>
+            ) : null}
           </>
         ) : null}
       </div>

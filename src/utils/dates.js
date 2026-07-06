@@ -63,6 +63,14 @@ export function isTodayDateKey(dateKey) {
   return dateKey === toDateKey(new Date());
 }
 
+/** Whole weeks between `dateKey`'s Monday and the Monday of `referenceDate`. */
+export function weekOffsetForDateKey(dateKey, referenceDate = new Date()) {
+  const targetStart = startOfWeekMonday(parseDateKey(dateKey));
+  const refStart = startOfWeekMonday(referenceDate);
+  const diffDays = Math.round((targetStart - refStart) / (24 * 60 * 60 * 1000));
+  return Math.round(diffDays / 7);
+}
+
 /** First and last calendar day (YYYY-MM-DD) for a given month (monthIndex 0–11). */
 export function getMonthDateRangeKeys(year, monthIndex) {
   const start = new Date(year, monthIndex, 1);

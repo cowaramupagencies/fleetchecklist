@@ -67,6 +67,32 @@ export function normalizeTemplateCategories(categories) {
   }));
 }
 
+/** Cowaramup forklift checklist includes this category id. */
+export function isUpToDateForkliftTemplate(data) {
+  return Boolean(data?.categories?.some((c) => c.id === 'forklift-pre-op'));
+}
+
+function builtTemplatePayload(vehicleType) {
+  const built = vehicleType === 'forklift' ? buildForkliftTemplate() : buildTruckTemplate();
+  return {
+    name: built.name,
+    vehicleType: built.vehicleType,
+    categories: normalizeTemplateCategories(built.categories),
+  };
+}
+
+/** Create or overwrite a template in Firestore from the latest built-in defaults. */
+export async function refreshTemplateFromBuiltIn(uid, vehicleType) {
+  if (!db) throw new Error('Firebase not configured');
+  const payload = builtTemplatePayload(vehicleType);
+  const existing = await getTemplateByType(uid, vehicleType);
+  if (existing) {
+    await updateTemplateDoc(existing.id, payload);
+    return existing.id;
+  }
+  return createTemplate(uid, payload);
+}
+
 export async function seedDefaultTemplates(uid) {
   if (!db) throw new Error('Firebase not configured');
   const existing = await getTemplatesForUser(uid);
@@ -76,20 +102,22 @@ export async function seedDefaultTemplates(uid) {
   const out = { truckId: null, forkliftId: null };
 
   if (!hasTruck) {
-    const truck = buildTruckTemplate();
-    truck.categories = normalizeTemplateCategories(truck.categories);
-    const id = await createTemplate(uid, truck);
-    out.truckId = id;
+    out.truckId = await refreshTemplateFromBuiltIn(uid, 'truck');
   }
 
   if (!hasFork) {
-    const fl = buildForkliftTemplate();
-    fl.categories = normalizeTemplateCategories(fl.categories);
-    const id = await createTemplate(uid, fl);
-    out.forkliftId = id;
+    out.forkliftId = await refreshTemplateFromBuiltIn(uid, 'forklift');
   }
 
   return out;
+}
+
+/** Force both truck and forklift templates to the latest Cowaramup defaults. */
+export async function applyLatestDefaultTemplates(uid) {
+  if (!db) throw new Error('Firebase not configured');
+  const truckId = await refreshTemplateFromBuiltIn(uid, 'truck');
+  const forkliftId = await refreshTemplateFromBuiltIn(uid, 'forklift');
+  return { truckId, forkliftId };
 }
 
 export async function updateTemplateDoc(templateId, patch) {

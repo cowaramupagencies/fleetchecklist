@@ -26,5 +26,5 @@ FIREBASE (live site login)
 Firebase Console → Authentication → Authorized domains → add:
   cowaramupagencies.github.io
 
-Files in this folder: 105
-Generated: 06/07/2026, 11:07:25 am
+Files in this folder: 104
+Generated: 06/07/2026, 11:28:21 am

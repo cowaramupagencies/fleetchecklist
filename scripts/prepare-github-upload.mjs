@@ -11,7 +11,6 @@ const COPY_PATHS = [
   'docs',
   '.github',
   'scripts',
-  'index.html',
   'package.json',
   'package-lock.json',
   'vite.config.js',
@@ -59,6 +58,33 @@ for (const rel of COPY_PATHS) {
 }
 
 const fileCount = countFiles(outDir);
+writeFileSync(join(outDir, 'IMPORTANT - READ FIRST.txt'), `!!! YOUR SITE IS BUILT BUT GITHUB IS POINTING AT THE WRONG FOLDER !!!
+
+The live website files are in the "docs" folder (already uploaded).
+Local dev uses index.html in the main project — that file is NOT uploaded
+on purpose (it causes the main.jsx error on GitHub).
+
+FIX (takes 30 seconds):
+1. Open: https://github.com/cowaramupagencies/fleetchecklist/settings/pages
+2. Under "Build and deployment":
+   - Source: Deploy from a branch
+   - Branch: main
+   - Folder: /docs          <-- MUST BE /docs NOT /(root)
+3. Click Save
+4. Wait 1-2 minutes
+5. Open: https://cowaramupagencies.github.io/fleetchecklist/
+6. Hard refresh: Ctrl+Shift+R
+
+HOW TO CHECK IT WORKED:
+- Right-click the page → View page source
+- You should see: /fleetchecklist/assets/index-xxxxx.js
+- You should NOT see: /src/main.jsx
+
+Why local works but GitHub doesn't:
+- Cursor runs "npm run dev" (development mode)
+- GitHub must serve the BUILT files from the docs/ folder
+`);
+
 const instructions = `FLEET CHECKLIST — UPLOAD THIS ENTIRE FOLDER TO GITHUB
 ============================================================
 

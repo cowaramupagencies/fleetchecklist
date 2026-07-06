@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:pages": "vite build && node scripts/prepare-gh-pages.mjs",
+    "github-upload": "node scripts/prepare-github-upload.mjs",
     "lint": "eslint .",
     "preview": "vite preview",
     "archive": "bash scripts/create-github-archive.sh"
